@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react'
+import {useSearchParams} from 'react-router-dom';
 import './Header.css'
 
 export default function Header({setSearch,items, setStartDate, setEndDate,setIsSearch}) {
   const [data, setData] = useState([])
+  const [searchParams, setSearchParams] = useSearchParams();
+
   useEffect(()=>{
    
    const dataArray =[];
@@ -18,6 +21,10 @@ export default function Header({setSearch,items, setStartDate, setEndDate,setIsS
    setData(dataArray)
 
   },[items])
+
+  const handleChange = event => {
+    setSearchParams({query: event.target.value});
+  };
 
   const searchApplicationId = (e)=>{
     setIsSearch(false)
@@ -54,19 +61,21 @@ export default function Header({setSearch,items, setStartDate, setEndDate,setIsS
             <select 
                 defaultValue={null}
                 placeholder="select action type"
+                onChange={handleChange}
                 onClick={(e)=> searchActionType(e)}>{
                     data?.map(em=>{
                         return <option key={em.logId}>
                         {em.actionType}
                         </option>
                     })
-                }
+                }  
             </select>
         </div>
         <div>
             <span>Application type</span>
             <select 
             placeholder='select application type'
+            onChange={handleChange}
             onClick={(e)=> searchApplicationType(e)}>{
             data?.map(e=>{
                 return <option key={e.logId}>
@@ -78,18 +87,18 @@ export default function Header({setSearch,items, setStartDate, setEndDate,setIsS
         </div>
         <div>
             <span>From Date</span>
-            <input placeholder='YYYY-MM-DD' onChange={(e)=> searchFromDate(e)}/>
+            <input placeholder='YYYY-MM-DD' onChange={(e)=> searchFromDate(e)} onChange={handleChange}/>
         </div>
         <div>
             <span>To Date</span>
-            <input placeholder='YYYY-MM-DD' onChange={(e)=> searchToDate(e)}  />
+            <input placeholder='YYYY-MM-DD' onChange={(e)=> searchToDate(e)}  onChange={handleChange}/>
         </div>
         <div>
             <span>Application ID</span>
-            <input placeholder='815255338944773'  onChange={(e)=> searchApplicationId(e)}/>
+            <input placeholder='815255338944773'  onChange={(e)=> searchApplicationId(e)} onChange={handleChange}/>
         </div>
         <div>
-            <input type="button" className="button" value="Search Logger" onClick={()=> handleclick()}/>
+            <input type="button" className="button" value="Search Logger" onClick={()=> handleclick() } onChange={handleChange}/>
         </div>
     </div>
   )

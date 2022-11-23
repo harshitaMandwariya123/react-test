@@ -1,0 +1,12 @@
+.header{
+    display: flex;
+    flex-direction: row;
+    margin-top: 1%;
+    margin-left: 1%;
+    margin-bottom: 3px;
+}
+
+.button {
+    background-color: blue;
+    color: white;
+}
